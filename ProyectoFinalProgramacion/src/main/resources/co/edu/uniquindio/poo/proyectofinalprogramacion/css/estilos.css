@@ -1,0 +1,301 @@
+/* =====================================================================
+   E-MONEY · estilos.css
+   Paleta:  beige #D8CFBC · fondo #FFFBFB · tinta #11120D · oliva #565449
+            terracota #8C3B2E (solo Eliminar, Revertir y errores)
+   Fuente:  DM Serif Display (cargada con Font.loadFont en App.java)
+   ===================================================================== */
+
+.root {
+    -beige: #D8CFBC;
+    -fondo: #FFFBFB;
+    -tinta: #11120D;
+    -oliva: #565449;
+    -terracota: #8C3B2E;
+    /* derivados: beige al 40 % y al 20 % sobre el fondo */
+    -campo: #EFE9E2;
+    -zebra: #F7F2EE;
+
+    -fx-background-color: -fondo;
+    -fx-font-family: "DM Serif Display";
+    -fx-font-size: 15px;
+    -fx-font-weight: normal;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-accent: -oliva;
+}
+
+.label { -fx-text-fill: -tinta; -fx-font-weight: normal; }
+
+/* ---------------- Menú lateral ---------------- */
+.menu { -fx-background-color: -beige; -fx-padding: 70 0 20 0; }
+
+.menu-titulo {
+    -fx-font-size: 38px;
+    -fx-text-fill: -oliva;
+    -fx-alignment: CENTER;
+    -fx-cursor: hand;
+    -fx-padding: 0 0 36 0;
+}
+
+.menu-item {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-text-fill: -tinta;
+    -fx-font-size: 17px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-text-alignment: LEFT;
+    -fx-padding: 9 12 9 16;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 0 4;
+}
+.menu-item:hover { -fx-background-color: derive(-beige, -8%); }
+.menu-item.activo {
+    -fx-background-color: derive(-beige, -8%);
+    -fx-text-fill: -oliva;
+    -fx-border-color: transparent transparent transparent -oliva;
+}
+
+/* ---------------- Barra del cliente activo ---------------- */
+.barra-cliente {
+    -fx-background-color: -fondo;
+    -fx-padding: 14 40 14 40;
+    -fx-border-color: -beige;
+    -fx-border-width: 0 0 2 0;
+}
+.chip {
+    -fx-background-color: -beige;
+    -fx-background-radius: 14;
+    -fx-padding: 5 16;
+    -fx-text-fill: -oliva;
+}
+
+/* ---------------- Bienvenida ---------------- */
+.bienvenida { -fx-background-color: -fondo; -fx-padding: 0 0 0 50; }
+.bienvenida-titulo { -fx-font-size: 80px; -fx-text-fill: -tinta; }
+.bienvenida-subtitulo { -fx-font-size: 46px; -fx-text-fill: -oliva; }
+
+/* ---------------- Vistas ---------------- */
+.vista { -fx-background-color: -fondo; -fx-padding: 20 40 24 40; }
+.titulo { -fx-font-size: 42px; -fx-text-fill: -tinta; -fx-alignment: CENTER; }
+.subtitulo { -fx-font-size: 22px; -fx-text-fill: -oliva; }
+.etiqueta { -fx-font-size: 18px; -fx-text-fill: -tinta; }
+
+.scroll-vista { -fx-background-color: -fondo; -fx-background-insets: 0; -fx-padding: 0; }
+.scroll-vista > .viewport { -fx-background-color: -fondo; }
+
+/* ---------------- Campos de texto ---------------- */
+.text-field {
+    -fx-background-color: -campo;
+    -fx-background-insets: 0;
+    -fx-background-radius: 6;
+    -fx-border-color: -beige;
+    -fx-border-radius: 6;
+    -fx-text-fill: -tinta;
+    -fx-prompt-text-fill: #56544980;
+    -fx-highlight-fill: -oliva;
+    -fx-highlight-text-fill: -fondo;
+    -fx-font-size: 16px;
+    -fx-padding: 8 12;
+}
+.text-field:focused { -fx-border-color: -oliva; }
+
+/* ---------------- ComboBox y DatePicker ---------------- */
+.combo-box, .date-picker {
+    -fx-background-color: -campo;
+    -fx-background-insets: 0;
+    -fx-background-radius: 6;
+    -fx-border-color: -beige;
+    -fx-border-radius: 6;
+    -fx-padding: 0;
+}
+.combo-box:focused, .date-picker:focused { -fx-border-color: -oliva; }
+.combo-box > .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: -tinta;
+    -fx-font-size: 16px;
+    -fx-padding: 8 12;
+}
+.combo-box-base > .arrow-button { -fx-background-color: transparent; -fx-background-insets: 0; }
+.combo-box-base > .arrow-button > .arrow { -fx-background-color: -oliva; }
+.date-picker > .text-field { -fx-background-color: transparent; -fx-border-color: transparent; }
+
+.combo-box-popup > .list-view {
+    -fx-background-color: -fondo;
+    -fx-background-insets: 0;
+    -fx-border-color: -beige;
+}
+.combo-box-popup .list-cell {
+    -fx-background-color: -fondo;
+    -fx-text-fill: -tinta;
+    -fx-font-size: 16px;
+    -fx-padding: 8 12;
+}
+.combo-box-popup .list-cell:filled:hover { -fx-background-color: -beige; }
+.combo-box-popup .list-cell:filled:selected { -fx-background-color: -oliva; -fx-text-fill: -fondo; }
+
+.date-picker-popup {
+    -fx-background-color: -fondo;
+    -fx-background-insets: 0;
+    -fx-border-color: -beige;
+}
+.date-picker-popup > .month-year-pane { -fx-background-color: -beige; }
+.date-picker-popup > .month-year-pane .label { -fx-text-fill: -tinta; }
+.date-picker-popup .spinner .button { -fx-background-color: transparent; }
+.date-picker-popup .spinner .left-button > .left-arrow,
+.date-picker-popup .spinner .right-button > .right-arrow { -fx-background-color: -oliva; }
+.date-picker-popup .day-name-cell,
+.date-picker-popup .week-number-cell { -fx-text-fill: -oliva; }
+.date-picker-popup .day-cell { -fx-background-color: transparent; -fx-text-fill: -tinta; }
+.date-picker-popup .day-cell:hover { -fx-background-color: -beige; }
+.date-picker-popup .day-cell:today { -fx-border-color: -oliva; }
+.date-picker-popup .day-cell:selected { -fx-background-color: -oliva; -fx-text-fill: -fondo; }
+
+/* ---------------- Botones ---------------- */
+.boton-principal, .boton-peligro, .boton-secundario {
+    -fx-background-insets: 0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-size: 17px;
+    -fx-padding: 10 30;
+    -fx-min-width: 240px;
+    -fx-cursor: hand;
+}
+.boton-principal { -fx-background-color: -oliva; -fx-text-fill: -fondo; }
+.boton-principal:hover { -fx-background-color: derive(-oliva, -15%); }
+.boton-principal:pressed { -fx-background-color: derive(-oliva, -30%); }
+
+.boton-peligro { -fx-background-color: -terracota; -fx-text-fill: -fondo; }
+.boton-peligro:hover { -fx-background-color: derive(-terracota, -15%); }
+.boton-peligro:pressed { -fx-background-color: derive(-terracota, -30%); }
+
+.boton-secundario { -fx-background-color: -beige; -fx-text-fill: -oliva; }
+.boton-secundario:hover { -fx-background-color: derive(-beige, -10%); }
+
+.boton-corto { -fx-min-width: 150px; -fx-padding: 8 20; }
+.button:disabled { -fx-opacity: 0.45; }
+
+/* ---------------- Mensajes ---------------- */
+.mensaje-error { -fx-text-fill: -terracota; -fx-font-size: 15px; }
+.mensaje-ok { -fx-text-fill: -oliva; -fx-font-size: 15px; }
+
+/* ---------------- Tarjetas de resumen ---------------- */
+.tarjeta {
+    -fx-background-color: -beige;
+    -fx-background-radius: 12;
+    -fx-padding: 14 22;
+    -fx-alignment: CENTER;
+    -fx-spacing: 2;
+}
+.tarjeta-etiqueta { -fx-font-size: 14px; -fx-text-fill: -oliva; }
+.tarjeta-valor { -fx-font-size: 30px; -fx-text-fill: -tinta; }
+
+/* ---------------- TableView ---------------- */
+.table-view {
+    -fx-background-color: -fondo;
+    -fx-background-insets: 0;
+    -fx-border-color: -beige;
+    -fx-border-width: 2;
+    -fx-padding: 0;
+    -fx-fixed-cell-size: 42px;
+}
+.table-view .column-header-background { -fx-background-color: -beige; }
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: -beige;
+    -fx-size: 44px;
+    -fx-border-color: derive(-beige, -12%);
+    -fx-border-width: 0 1 0 0;
+}
+.table-view .column-header .label {
+    -fx-text-fill: -tinta;
+    -fx-font-size: 15px;
+    -fx-alignment: CENTER;
+}
+.table-row-cell {
+    -fx-background-color: -fondo;
+    -fx-border-color: -beige;
+    -fx-border-width: 0 0 1 0;
+}
+.table-row-cell:filled:odd { -fx-background-color: -zebra; }
+.table-row-cell:empty { -fx-background-color: -fondo; -fx-border-width: 0; }
+.table-row-cell:filled:selected { -fx-background-color: -oliva; }
+.table-cell {
+    -fx-text-fill: -tinta;
+    -fx-font-size: 15px;
+    -fx-alignment: CENTER;
+    -fx-border-color: -beige;
+    -fx-border-width: 0 1 0 0;
+}
+.table-row-cell:filled:selected .table-cell { -fx-text-fill: -fondo; }
+.table-view .placeholder .label { -fx-text-fill: -oliva; }
+
+/* ---------------- Scrollbars ---------------- */
+.scroll-bar { -fx-background-color: transparent; }
+.scroll-bar > .track { -fx-background-color: transparent; -fx-border-color: transparent; }
+.scroll-bar > .thumb { -fx-background-color: -beige; -fx-background-radius: 6; -fx-background-insets: 2; }
+.scroll-bar > .increment-button, .scroll-bar > .decrement-button {
+    -fx-background-color: transparent; -fx-padding: 0;
+}
+.scroll-bar > .increment-button > .increment-arrow,
+.scroll-bar > .decrement-button > .decrement-arrow { -fx-shape: " "; -fx-padding: 0; }
+.scroll-bar:vertical > .increment-button, .scroll-bar:vertical > .decrement-button { -fx-pref-height: 0; }
+.scroll-bar:horizontal > .increment-button, .scroll-bar:horizontal > .decrement-button { -fx-pref-width: 0; }
+
+/* ---------------- ProgressBar ---------------- */
+.progress-bar > .track {
+    -fx-background-color: -beige;
+    -fx-background-insets: 0;
+    -fx-background-radius: 8;
+}
+.progress-bar > .bar {
+    -fx-background-color: -oliva;
+    -fx-background-insets: 0;
+    -fx-background-radius: 8;
+    -fx-padding: 0.5em;
+}
+
+/* ---------------- TabPane ---------------- */
+.tab-pane > .tab-header-area > .tab-header-background { -fx-background-color: transparent; }
+.tab-pane > .tab-header-area .tab {
+    -fx-background-color: -beige;
+    -fx-background-insets: 0 4 0 0;
+    -fx-background-radius: 8 8 0 0;
+    -fx-padding: 6 22;
+}
+.tab-pane > .tab-header-area .tab:selected { -fx-background-color: -oliva; }
+.tab-pane > .tab-header-area .tab .tab-label { -fx-text-fill: -tinta; -fx-font-size: 16px; }
+.tab-pane > .tab-header-area .tab:selected .tab-label { -fx-text-fill: -fondo; }
+.tab-pane > .tab-content-area { -fx-background-color: transparent; }
+
+/* ---------------- Gráficos ---------------- */
+.chart { -fx-background-color: transparent; }
+.chart-title { -fx-text-fill: -tinta; -fx-font-size: 20px; }
+.chart-plot-background { -fx-background-color: transparent; }
+.chart-vertical-grid-lines, .chart-horizontal-grid-lines { -fx-stroke: -beige; }
+.chart-horizontal-zero-line, .chart-vertical-zero-line { -fx-stroke: -oliva; }
+.chart .axis {
+    -fx-tick-label-fill: -oliva;
+    -fx-tick-label-font-family: "DM Serif Display";
+    -fx-tick-label-font-size: 13px;
+}
+.chart .axis-label { -fx-text-fill: -oliva; }
+.chart .axis-tick-mark, .chart .axis-minor-tick-mark { -fx-stroke: -beige; }
+.chart-legend { -fx-background-color: transparent; }
+.default-color0.chart-bar { -fx-bar-fill: -oliva; }
+.default-color1.chart-bar { -fx-bar-fill: -terracota; }
+.default-color2.chart-bar { -fx-bar-fill: derive(-beige, -25%); }
+
+/* ---------------- Alert / diálogos ---------------- */
+.dialog-pane { -fx-background-color: -fondo; }
+.dialog-pane > .header-panel { -fx-background-color: -beige; }
+.dialog-pane > .header-panel .label { -fx-text-fill: -tinta; -fx-font-size: 20px; }
+.dialog-pane > .content.label { -fx-text-fill: -tinta; -fx-font-size: 16px; }
+.dialog-pane > .button-bar > .container > .button {
+    -fx-background-color: -oliva;
+    -fx-background-radius: 8;
+    -fx-text-fill: -fondo;
+    -fx-font-size: 15px;
+    -fx-padding: 8 24;
+    -fx-cursor: hand;
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="16.0" styleClass="vista" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinalprogramacion.viewController.TransaccionesViewController">
+   <Label maxWidth="Infinity" styleClass="titulo" text="Transacciones" />
+   <GridPane hgap="20.0" vgap="10.0">
+      <columnConstraints>
+         <ColumnConstraints minWidth="230.0" prefWidth="230.0" />
+         <ColumnConstraints hgrow="ALWAYS" />
+      </columnConstraints>
+      <Label styleClass="etiqueta" text="Tipo de operación:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+      <ComboBox fx:id="cmbTipoOperacion" maxWidth="Infinity" onAction="#cambiarTipoOperacion" promptText="Depósito, retiro o transferencia" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+      <Label styleClass="etiqueta" text="Monedero origen:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+      <ComboBox fx:id="cmbMonederoOrigen" maxWidth="Infinity" onAction="#actualizarResumen" promptText="Seleccione un monedero" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label styleClass="etiqueta" text="Monto:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+      <TextField fx:id="txtMonto" onKeyReleased="#actualizarResumen" promptText="0.00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label fx:id="lblDocumentoDestino" managed="false" styleClass="etiqueta" text="Cliente destino:" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+      <TextField fx:id="txtDocumentoDestino" managed="false" onAction="#buscarDestino" promptText="Documento del cliente y presione Enter" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label fx:id="lblMonederoDestino" managed="false" styleClass="etiqueta" text="Monedero destino:" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+      <ComboBox fx:id="cmbMonederoDestino" managed="false" maxWidth="Infinity" promptText="Seleccione el monedero destino" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+   </GridPane>
+   <HBox alignment="CENTER" spacing="24.0">
+      <VBox maxWidth="Infinity" styleClass="tarjeta" HBox.hgrow="ALWAYS">
+         <Label styleClass="tarjeta-etiqueta" text="Saldo disponible" />
+         <Label fx:id="lblSaldo" styleClass="tarjeta-valor" text="$ 0.00" />
+      </VBox>
+      <VBox maxWidth="Infinity" styleClass="tarjeta" HBox.hgrow="ALWAYS">
+         <Label styleClass="tarjeta-etiqueta" text="Cargo o comisión" />
+         <Label fx:id="lblCargo" styleClass="tarjeta-valor" text="$ 0.00" />
+      </VBox>
+      <VBox maxWidth="Infinity" styleClass="tarjeta" HBox.hgrow="ALWAYS">
+         <Label styleClass="tarjeta-etiqueta" text="Puntos a ganar" />
+         <Label fx:id="lblPuntosGanar" styleClass="tarjeta-valor" text="0" />
+      </VBox>
+   </HBox>
+   <Label fx:id="lblMensaje" prefHeight="20.0" styleClass="mensaje-error" wrapText="true" />
+   <HBox alignment="CENTER" spacing="40.0">
+      <Button fx:id="btnEjecutar" mnemonicParsing="false" onAction="#ejecutarTransaccion" styleClass="boton-principal" text="Ejecutar" />
+      <Button fx:id="btnLimpiar" mnemonicParsing="false" onAction="#limpiarFormulario" styleClass="boton-principal" text="Limpiar" />
+   </HBox>
+</VBox>

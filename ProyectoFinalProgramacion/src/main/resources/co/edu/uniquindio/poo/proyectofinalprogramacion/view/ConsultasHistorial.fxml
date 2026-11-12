@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="14.0" styleClass="vista" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinalprogramacion.viewController.ConsultasHistorialViewController">
+   <Label maxWidth="Infinity" styleClass="titulo" text="Consultas e Historial" />
+   <HBox alignment="BOTTOM_LEFT" spacing="20.0">
+      <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+         <Label styleClass="etiqueta" text="Monedero:" />
+         <ComboBox fx:id="cmbMonedero" maxWidth="Infinity" onAction="#actualizarSaldo" promptText="Seleccione" />
+      </VBox>
+      <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+         <Label styleClass="etiqueta" text="Tipo:" />
+         <ComboBox fx:id="cmbTipo" maxWidth="Infinity" promptText="Todos" />
+      </VBox>
+      <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+         <Label styleClass="etiqueta" text="Desde:" />
+         <DatePicker fx:id="dpDesde" maxWidth="Infinity" />
+      </VBox>
+      <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+         <Label styleClass="etiqueta" text="Hasta:" />
+         <DatePicker fx:id="dpHasta" maxWidth="Infinity" />
+      </VBox>
+      <Button fx:id="btnFiltrar" mnemonicParsing="false" onAction="#filtrar" styleClass="boton-principal, boton-corto" text="Filtrar" />
+   </HBox>
+   <VBox maxWidth="360.0" styleClass="tarjeta">
+      <Label styleClass="tarjeta-etiqueta" text="Saldo del monedero" />
+      <Label fx:id="lblSaldo" styleClass="tarjeta-valor" text="$ 0.00" />
+   </VBox>
+   <Label fx:id="lblMensaje" prefHeight="20.0" styleClass="mensaje-error" wrapText="true" />
+   <TableView fx:id="tblHistorial" minHeight="150.0" VBox.vgrow="ALWAYS">
+      <columnResizePolicy>
+         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+      </columnResizePolicy>
+      <columns>
+         <TableColumn fx:id="colCodigo" text="Código" />
+         <TableColumn fx:id="colFecha" text="Fecha" />
+         <TableColumn fx:id="colTipo" text="Tipo" />
+         <TableColumn fx:id="colMonto" text="Monto" />
+         <TableColumn fx:id="colEstado" text="Estado" />
+         <TableColumn fx:id="colPuntos" text="Puntos" />
+         <TableColumn fx:id="colSospechosa" text="Sospechosa" />
+      </columns>
+   </TableView>
+   <HBox alignment="CENTER" spacing="40.0">
+      <Button fx:id="btnLimpiarFiltros" mnemonicParsing="false" onAction="#limpiarFiltros" styleClass="boton-principal" text="Limpiar filtros" />
+      <Button fx:id="btnRevertir" mnemonicParsing="false" onAction="#revertirTransaccion" styleClass="boton-peligro" text="Revertir transacción" />
+   </HBox>
+</VBox>

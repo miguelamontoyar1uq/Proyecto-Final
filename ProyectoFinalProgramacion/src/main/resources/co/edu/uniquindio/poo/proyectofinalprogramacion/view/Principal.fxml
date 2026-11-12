@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="768.0" prefWidth="1366.0" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.proyectofinalprogramacion.viewController.PrincipalViewController">
+   <left>
+      <VBox maxWidth="200.0" minWidth="200.0" prefWidth="200.0" spacing="6.0" styleClass="menu">
+         <Label maxWidth="Infinity" onMouseClicked="#mostrarBienvenida" styleClass="menu-titulo" text="MENÚ" />
+         <Button fx:id="btnClientes" maxWidth="Infinity" mnemonicParsing="false" onAction="#abrirClientes" styleClass="menu-item" text="Gestión Clientes" wrapText="true" />
+         <Button fx:id="btnMonederos" maxWidth="Infinity" mnemonicParsing="false" onAction="#abrirMonederos" styleClass="menu-item" text="Gestión Monederos" wrapText="true" />
+         <Button fx:id="btnTransacciones" maxWidth="Infinity" mnemonicParsing="false" onAction="#abrirTransacciones" styleClass="menu-item" text="Transacciones" wrapText="true" />
+         <Button fx:id="btnHistorial" maxWidth="Infinity" mnemonicParsing="false" onAction="#abrirHistorial" styleClass="menu-item" text="Consultas Historial" wrapText="true" />
+         <Button fx:id="btnProgramadas" maxWidth="Infinity" mnemonicParsing="false" onAction="#abrirProgramadas" styleClass="menu-item" text="Transacciones Programadas" wrapText="true" />
+         <Button fx:id="btnAnalisis" maxWidth="Infinity" mnemonicParsing="false" onAction="#abrirAnalisis" styleClass="menu-item" text="Análisis Gastos" wrapText="true" />
+         <Button fx:id="btnNotificaciones" maxWidth="Infinity" mnemonicParsing="false" onAction="#abrirNotificaciones" styleClass="menu-item" text="Notificaciones" wrapText="true" />
+         <Button fx:id="btnPuntos" maxWidth="Infinity" mnemonicParsing="false" onAction="#abrirPuntosBeneficios" styleClass="menu-item" text="Puntos y Beneficios" wrapText="true" />
+      </VBox>
+   </left>
+   <center>
+      <BorderPane fx:id="areaContenido">
+         <top>
+            <HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="barra-cliente">
+               <Label styleClass="etiqueta" text="Cliente activo:" />
+               <ComboBox fx:id="cmbClienteActivo" onAction="#cambiarClienteActivo" prefWidth="280.0" promptText="Seleccione un cliente" />
+               <Region HBox.hgrow="ALWAYS" />
+               <Label fx:id="lblRangoActivo" styleClass="chip" text="Rango: —" />
+               <Label fx:id="lblPuntosActivo" styleClass="chip" text="Puntos: 0" />
+            </HBox>
+         </top>
+         <center>
+            <VBox fx:id="panelBienvenida" alignment="CENTER_LEFT" styleClass="bienvenida">
+               <Label styleClass="bienvenida-titulo" text="E-MONEY" />
+               <Label styleClass="bienvenida-subtitulo" text="El monedero virtual #1." />
+            </VBox>
+         </center>
+      </BorderPane>
+   </center>
+</BorderPane>
