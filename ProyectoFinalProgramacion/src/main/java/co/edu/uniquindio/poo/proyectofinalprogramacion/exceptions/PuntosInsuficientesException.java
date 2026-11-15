@@ -1,4 +1,4 @@
-package co.edu.uniquindio.poo.proyectofinal.exceptions;
+package co.edu.uniquindio.poo.proyectofinalprogramacion.exceptions;
 
 public class PuntosInsuficientesException extends Exception {
     public PuntosInsuficientesException(String mensaje) {
