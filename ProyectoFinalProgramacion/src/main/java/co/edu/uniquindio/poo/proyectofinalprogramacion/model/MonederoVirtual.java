@@ -116,7 +116,7 @@ public class MonederoVirtual {
     }
 
     private void verificarTransaccionAtipica(Cliente cliente, Transaccion transaccion) {
-        boolean atipica = cliente.obtenerTransaccionesAtipicas().contains(transaccion);
+        boolean atipica = cliente.esTransaccionAtipica(transaccion);
 
         if (atipica && !transaccion.isEsSospechosa()) {
             transaccion.marcarComoSospechosa();

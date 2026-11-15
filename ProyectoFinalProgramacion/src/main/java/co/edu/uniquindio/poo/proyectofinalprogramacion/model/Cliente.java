@@ -244,32 +244,35 @@ public class Cliente {
 
     // ---------- Detección de transacciones atípicas ----------
 
-    public List<Transaccion> obtenerTransaccionesAtipicas() {
-        // Une el historial de todos los monederos; distinct() evita duplicar
-        // una transferencia entre dos monederos del mismo cliente (es el mismo objeto)
-        List<Transaccion> historial = listaMonederos.values().stream()
+    /**
+     * Evalúa si una transacción en particular es atípica basándose en el
+     * historial histórico del cliente, EXCLUYENDO la transacción actual del cálculo.
+     */
+    public boolean esTransaccionAtipica(Transaccion nuevaTransaccion) {
+
+        // Une el historial de todos los monederos excluyendo la nueva transacción
+        List<Transaccion> historialHistorico = listaMonederos.values().stream()
                 .flatMap(monedero -> monedero.getHistorialTransacciones().stream())
                 .distinct()
+                .filter(t -> !t.getId().equals(nuevaTransaccion.getId()))
                 .toList();
 
-        if (historial.size() < 2) {
-            return List.of();
+        if (historialHistorico.size() < 2) {
+            return false;
         }
 
-        double promedio = historial.stream()
+        double promedio = historialHistorico.stream()
                 .mapToDouble(Transaccion::getMonto)
                 .average()
                 .orElse(0);
 
-        double sumaCuadrados = historial.stream()
+        double sumaCuadrados = historialHistorico.stream()
                 .mapToDouble(t -> Math.pow(t.getMonto() - promedio, 2))
                 .sum();
 
-        double desviacion = Math.sqrt(sumaCuadrados / historial.size());
+        double desviacion = Math.sqrt(sumaCuadrados / historialHistorico.size());
         double umbral = promedio + (2 * desviacion);
 
-        return historial.stream()
-                .filter(t -> t.getMonto() > umbral)
-                .toList();
+        return nuevaTransaccion.getMonto() > umbral;
     }
 }
