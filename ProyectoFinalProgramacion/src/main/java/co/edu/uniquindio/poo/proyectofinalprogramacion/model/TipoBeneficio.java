@@ -1,4 +1,4 @@
-package co.edu.uniquindio.poo.proyectofinal.model;
+package co.edu.uniquindio.poo.proyectofinalprogramacion.model;
 
 public enum TipoBeneficio {
     DESCUENTO_TRANSFERENCIA("Reducción del 10% en la comisión por transferencias", 100),
