@@ -1,129 +1,85 @@
 package co.edu.uniquindio.poo.proyectofinalprogramacion.viewController;
 
-import co.edu.uniquindio.poo.proyectofinalprogramacion.controller.ClientesController;
 import co.edu.uniquindio.poo.proyectofinalprogramacion.controller.MonederoVirtualController;
-import co.edu.uniquindio.poo.proyectofinalprogramacion.controller.MonederosController;
-import co.edu.uniquindio.poo.proyectofinalprogramacion.controller.TransaccionesController;
-import co.edu.uniquindio.poo.proyectofinalprogramacion.model.Cliente;
-import co.edu.uniquindio.poo.proyectofinalprogramacion.model.Monedero;
+import co.edu.uniquindio.poo.proyectofinalprogramacion.controller.NotificacionesController;
+import co.edu.uniquindio.poo.proyectofinalprogramacion.model.Notificacion;
+import co.edu.uniquindio.poo.proyectofinalprogramacion.model.enums.Canal;
+import co.edu.uniquindio.poo.proyectofinalprogramacion.model.enums.TipoNotificacion;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
-import java.util.List;
-
-public class TransaccionesViewController {
+public class NotificacionesViewController {
 
     private MonederoVirtualController fachada;
-    private TransaccionesController transaccionesController;
-    private MonederosController monederosController;
-    private ClientesController clientesController;
+    private NotificacionesController notificacionesController;
+    private ObservableList<Notificacion> listaNotificaciones;
 
-    @FXML private ComboBox<String> cmbTipoOperacion;
-    @FXML private ComboBox<Monedero> cmbMonederoOrigen, cmbMonederoDestino;
-    @FXML private TextField txtMonto, txtDocumentoDestino;
-    @FXML private Label lblDocumentoDestino, lblMonederoDestino;
-    @FXML private Label lblSaldo, lblCargo, lblPuntosGanar, lblMensaje;
+    @FXML private ComboBox<TipoNotificacion> cmbTipo;
+    @FXML private ComboBox<Canal> cmbCanal;
+    @FXML private TableView<Notificacion> tblNotificaciones;
+    @FXML private TableColumn<Notificacion, String> colFecha, colTipo, colCanal, colMensaje;
 
-    public TransaccionesViewController() {
+    public NotificacionesViewController() {
         this.fachada = MonederoVirtualController.getInstancia();
-        this.transaccionesController = fachada.getTransaccionesController();
-        this.monederosController = fachada.getMonederosController();
-        this.clientesController = fachada.getClientesController();
+        this.notificacionesController = fachada.getNotificacionesController();
+        this.listaNotificaciones = FXCollections.observableArrayList();
     }
 
     @FXML
     private void initialize() {
-        Cliente cliente = fachada.getClienteActivo();
-        cmbTipoOperacion.setItems(FXCollections.observableArrayList(
-                transaccionesController.obtenerTiposOperacion()));
-        cmbMonederoOrigen.setItems(FXCollections.observableArrayList(
-                monederosController.obtenerMonederos(cliente)));
-        actualizarResumen();
+        cmbTipo.setItems(FXCollections.observableArrayList(notificacionesController.obtenerTipos()));
+        cmbCanal.setItems(FXCollections.observableArrayList(notificacionesController.obtenerCanales()));
+        configurarTabla();
+        actualizarTabla();
+    }
+
+    private void configurarTabla() {
+        colFecha.setCellValueFactory(c -> new SimpleStringProperty(Formatos.fechaHora(c.getValue().getFecha())));
+        colTipo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTipo().toString()));
+        colCanal.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getCanal().toString()));
+        colMensaje.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getMensaje()));
+        tblNotificaciones.setItems(listaNotificaciones);
     }
 
     @FXML
-    private void cambiarTipoOperacion() {
-        boolean transferencia = TransaccionesController.TRANSFERENCIA.equals(cmbTipoOperacion.getValue());
-        cambiarVisibilidad(transferencia, lblDocumentoDestino, txtDocumentoDestino,
-                lblMonederoDestino, cmbMonederoDestino);
-        if (!transferencia) {
-            limpiarDestino();
+    private void filtrar() {
+        actualizarTabla();
+    }
+
+    @FXML
+    private void limpiarFiltros() {
+        cmbTipo.setValue(null);
+        cmbCanal.setValue(null);
+        actualizarTabla();
+    }
+
+    @FXML
+    private void eliminarNotificacion() {
+        Notificacion seleccionada = tblNotificaciones.getSelectionModel().getSelectedItem();
+        if (seleccionada == null) {
+            Alertas.mostrarAdvertencia("Seleccione una notificación de la tabla");
+            return;
         }
-        actualizarResumen();
-    }
-
-    @FXML
-    private void buscarDestino() {
-        try {
-            Cliente destino = clientesController.buscarCliente(txtDocumentoDestino.getText());
-            List<Monedero> monederos = monederosController.obtenerMonederos(destino);
-            cmbMonederoDestino.setItems(FXCollections.observableArrayList(monederos));
-            cmbMonederoDestino.setValue(null);
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            Alertas.mostrarError(e.getMessage());
-        }
-    }
-
-    @FXML
-    private void actualizarResumen() {
-        Monedero origen = cmbMonederoOrigen.getValue();
-        lblSaldo.setText(Formatos.dinero(origen == null ? 0 : origen.getSaldo()));
-        lblCargo.setText(Formatos.dinero(0));
-        lblPuntosGanar.setText("0");
-        lblMensaje.setText("");
-        if (cmbTipoOperacion.getValue() == null || txtMonto.getText().isBlank()) {
+        if (!Alertas.confirmar("¿Eliminar la notificación seleccionada?")) {
             return;
         }
         try {
-            Cliente cliente = fachada.getClienteActivo();
-            double monto = Formatos.decimal(txtMonto.getText(), "monto");
-            String tipo = cmbTipoOperacion.getValue();
-            lblCargo.setText(Formatos.dinero(transaccionesController.calcularCargo(cliente, tipo, monto)));
-            lblPuntosGanar.setText(String.valueOf(transaccionesController.calcularPuntos(cliente, tipo, monto)));
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            lblMensaje.setText(e.getMessage());
-        }
-    }
-
-    @FXML
-    private void ejecutarTransaccion() {
-        try {
-            double monto = Formatos.decimal(txtMonto.getText(), "monto");
-            transaccionesController.ejecutarOperacion(fachada.getClienteActivo(), cmbTipoOperacion.getValue(),
-                    cmbMonederoOrigen.getValue(), cmbMonederoDestino.getValue(), monto);
-            fachada.notificarCambios();
-            // Conservar tipo y monedero
-            txtMonto.clear();
-            actualizarResumen();
-            Alertas.mostrarInformacion("Operación realizada correctamente");
+            notificacionesController.eliminarNotificacion(fachada.getClienteActivo(), seleccionada.getId());
+            actualizarTabla();
+            Alertas.mostrarInformacion("Notificación eliminada correctamente");
         } catch (IllegalArgumentException | IllegalStateException e) {
             Alertas.mostrarError(e.getMessage());
         }
     }
 
-    @FXML
-    private void limpiarFormulario() {
-        cmbTipoOperacion.setValue(null);
-        cmbMonederoOrigen.setValue(null);
-        txtMonto.clear();
-        limpiarDestino();
-        actualizarResumen();
-    }
-
-    private void limpiarDestino() {
-        txtDocumentoDestino.clear();
-        cmbMonederoDestino.setValue(null);
-        cmbMonederoDestino.getItems().clear();
-    }
-
-    private void cambiarVisibilidad(boolean visible, Node... nodos) {
-        for (Node nodo : nodos) {
-            nodo.setVisible(visible);
-            nodo.setManaged(visible);
-        }
+    private void actualizarTabla() {
+        listaNotificaciones.setAll(notificacionesController.obtenerNotificaciones(
+                fachada.getClienteActivo(), cmbTipo.getValue(), cmbCanal.getValue()));
+        tblNotificaciones.refresh();
     }
 }

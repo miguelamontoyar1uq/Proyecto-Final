@@ -43,7 +43,7 @@ public class AnalisisGastosViewController {
     }
 
     private void configurarTabla() {
-        colCodigo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getCodigo()));
+        colCodigo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getId()));
         colFecha.setCellValueFactory(c -> new SimpleStringProperty(Formatos.fechaHora(c.getValue().getFecha())));
         colTipo.setCellValueFactory(c ->
                 new SimpleStringProperty(transaccionesController.obtenerTipo(c.getValue())));

@@ -6,7 +6,7 @@ import co.edu.uniquindio.poo.proyectofinalprogramacion.controller.ProgramadasCon
 import co.edu.uniquindio.poo.proyectofinalprogramacion.model.Cliente;
 import co.edu.uniquindio.poo.proyectofinalprogramacion.model.Monedero;
 import co.edu.uniquindio.poo.proyectofinalprogramacion.model.TransaccionProgramada;
-import co.edu.uniquindio.poo.proyectofinalprogramacion.model.enums.Frecuencia;
+import co.edu.uniquindio.poo.proyectofinalprogramacion.model.Frecuencia;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -57,14 +57,14 @@ public class TransaccionesProgramadasViewController {
     }
 
     private void configurarTabla() {
-        colCodigo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getCodigo()));
+        colCodigo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getId()));
         colTipo.setCellValueFactory(c ->
                 new SimpleStringProperty(programadasController.obtenerTipo(c.getValue())));
         colMonto.setCellValueFactory(c -> new SimpleStringProperty(Formatos.dinero(c.getValue().getMonto())));
         colFrecuencia.setCellValueFactory(c ->
                 new SimpleStringProperty(c.getValue().getFrecuencia().toString()));
         colProxima.setCellValueFactory(c ->
-                new SimpleStringProperty(Formatos.fecha(c.getValue().getFechaProximaEjecucion())));
+                new SimpleStringProperty(Formatos.fechaHora(c.getValue().getFechaEjecucion())));
         colEstado.setCellValueFactory(c ->
                 new SimpleStringProperty(c.getValue().isActiva() ? "Activa" : "Pausada"));
         tblProgramadas.setItems(listaProgramadas);
@@ -109,7 +109,7 @@ public class TransaccionesProgramadasViewController {
             return;
         }
         try {
-            programadasController.actualizarProgramacion(seleccionada.getCodigo(),
+            programadasController.actualizarProgramacion(seleccionada.getId(),
                     Formatos.decimal(txtMonto.getText(), "monto"), cmbFrecuencia.getValue(),
                     dpProximaEjecucion.getValue(), cmbMonederoOrigen.getValue(), cmbMonederoDestino.getValue());
             actualizarTabla();
@@ -128,7 +128,7 @@ public class TransaccionesProgramadasViewController {
             return;
         }
         try {
-            programadasController.alternarEstado(seleccionada.getCodigo());
+            programadasController.alternarEstado(seleccionada.getId());
             actualizarTabla();
             limpiarFormulario();
         } catch (IllegalArgumentException | IllegalStateException e) {
@@ -155,11 +155,11 @@ public class TransaccionesProgramadasViewController {
             Alertas.mostrarAdvertencia("Seleccione una programación de la tabla");
             return;
         }
-        if (!Alertas.confirmar("¿Eliminar la programación " + seleccionada.getCodigo() + "?")) {
+        if (!Alertas.confirmar("¿Eliminar la programación " + seleccionada.getId() + "?")) {
             return;
         }
         try {
-            programadasController.eliminarProgramacion(seleccionada.getCodigo());
+            programadasController.eliminarProgramacion(seleccionada.getId());
             actualizarTabla();
             limpiarFormulario();
             Alertas.mostrarInformacion("Programación eliminada correctamente");
@@ -185,7 +185,7 @@ public class TransaccionesProgramadasViewController {
         cmbTipo.setValue(programadasController.obtenerTipo(programada));
         txtMonto.setText(String.valueOf(programada.getMonto()));
         cmbFrecuencia.setValue(programada.getFrecuencia());
-        dpProximaEjecucion.setValue(programada.getFechaProximaEjecucion());
+        dpProximaEjecucion.setValue(programada.getFechaEjecucion().toLocalDate());
         cmbMonederoOrigen.setValue(programada.getMonederoOrigen());
         cmbMonederoDestino.setValue(programada.getMonederoDestino());
         mostrarDestino(programada.getMonederoDestino() != null);

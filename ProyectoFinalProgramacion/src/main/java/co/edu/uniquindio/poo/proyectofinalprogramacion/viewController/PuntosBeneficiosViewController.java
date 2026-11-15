@@ -59,10 +59,10 @@ public class PuntosBeneficiosViewController {
 
         // Historial de puntos
         colFechaPuntos.setCellValueFactory(c ->
-                new SimpleStringProperty(Formatos.fechaHora(c.getValue().getFecha())));
+                new SimpleStringProperty(Formatos.fechaHora(c.getValue().fecha())));
         colMovimiento.setCellValueFactory(c ->
-                new SimpleStringProperty(c.getValue().getTipoMovimiento().toString()));
-        colPuntosMov.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getPuntos())));
+                new SimpleStringProperty(c.getValue().tipo()));
+        colPuntosMov.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().cantidadPuntos())));
         colTransaccion.setCellValueFactory(c ->
                 new SimpleStringProperty(puntosController.obtenerTransaccionAsociada(c.getValue())));
         tblHistorialPuntos.setItems(listaHistorial);

@@ -1,6 +1,6 @@
 package co.edu.uniquindio.poo.proyectofinalprogramacion.model;
 
-import co.edu.uniquindio.poo.proyectofinal.exceptions.SaldoInsuficienteException;
+import co.edu.uniquindio.poo.proyectofinalprogramacion.exceptions.SaldoInsuficienteException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

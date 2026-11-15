@@ -49,7 +49,7 @@ public class ConsultasHistorialViewController {
     }
 
     private void configurarTabla() {
-        colCodigo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getCodigo()));
+        colCodigo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getId()));
         colFecha.setCellValueFactory(c -> new SimpleStringProperty(Formatos.fechaHora(c.getValue().getFecha())));
         colTipo.setCellValueFactory(c ->
                 new SimpleStringProperty(transaccionesController.obtenerTipo(c.getValue())));
@@ -58,7 +58,7 @@ public class ConsultasHistorialViewController {
         colPuntos.setCellValueFactory(c ->
                 new SimpleStringProperty(String.valueOf(c.getValue().getPuntosGenerados())));
         colSospechosa.setCellValueFactory(c ->
-                new SimpleStringProperty(c.getValue().esSospechosa() ? "Sí" : "No"));
+                new SimpleStringProperty(c.getValue().isEsSospechosa() ? "Sí" : "No"));
         tblHistorial.setItems(listaTransacciones);
     }
 
@@ -84,8 +84,7 @@ public class ConsultasHistorialViewController {
             Alertas.mostrarAdvertencia("Seleccione una transacción de la tabla");
             return;
         }
-        if (!Alertas.confirmar("¿Revertir la transacción " + seleccionada.getCodigo() + "?")) {
-            return;
+         if (!Alertas.confirmar("¿Revertir la transacción " + seleccionada.getId() + "?")) {            return;
         }
         try {
             transaccionesController.revertirTransaccion(fachada.getClienteActivo(), seleccionada);

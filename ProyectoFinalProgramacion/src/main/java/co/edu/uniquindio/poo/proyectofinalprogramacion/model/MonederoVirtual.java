@@ -1,9 +1,9 @@
 package co.edu.uniquindio.poo.proyectofinalprogramacion.model;
 
-import co.edu.uniquindio.poo.proyectofinal.exceptions.LimiteRetiroExcedidoException;
-import co.edu.uniquindio.poo.proyectofinal.exceptions.MonederoInactivoException;
-import co.edu.uniquindio.poo.proyectofinal.exceptions.SaldoInsuficienteException;
-import co.edu.uniquindio.poo.proyectofinal.exceptions.TransaccionNoReversibleException;
+import co.edu.uniquindio.poo.proyectofinalprogramacion.exceptions.LimiteRetiroExcedidoException;
+import co.edu.uniquindio.poo.proyectofinalprogramacion.exceptions.MonederoInactivoException;
+import co.edu.uniquindio.poo.proyectofinalprogramacion.exceptions.SaldoInsuficienteException;
+import co.edu.uniquindio.poo.proyectofinalprogramacion.exceptions.TransaccionNoReversibleException;
 
 import java.time.LocalDateTime;
 import java.time.YearMonth;

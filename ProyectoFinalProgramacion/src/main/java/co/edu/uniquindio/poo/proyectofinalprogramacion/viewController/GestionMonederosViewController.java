@@ -42,7 +42,7 @@ public class GestionMonederosViewController {
     }
 
     private void configurarTabla() {
-        colCodigo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getCodigo()));
+        colCodigo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNumeroCuenta()));
         colNombre.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNombre()));
         colTipo.setCellValueFactory(c ->
                 new SimpleStringProperty(monederosController.obtenerTipo(c.getValue())));
@@ -91,7 +91,7 @@ public class GestionMonederosViewController {
             return;
         }
         try {
-            monederosController.actualizarMonedero(fachada.getClienteActivo(), seleccionado.getCodigo(),
+            monederosController.actualizarMonedero(fachada.getClienteActivo(), seleccionado.getNumeroCuenta(),
                     txtNombre.getText(), leerCampoTipo(txtMetaAhorro, "meta de ahorro"),
                     leerCampoTipo(txtLimiteDiario, "límite diario"),
                     leerCampoTipo(txtUmbralSaldoBajo, "umbral de saldo bajo"));
@@ -114,7 +114,7 @@ public class GestionMonederosViewController {
             return;
         }
         try {
-            monederosController.eliminarMonedero(fachada.getClienteActivo(), seleccionado.getCodigo());
+            monederosController.eliminarMonedero(fachada.getClienteActivo(), seleccionado.getNumeroCuenta());
             actualizarTabla();
             limpiarFormulario();
             Alertas.mostrarInformacion("Monedero eliminado correctamente");
