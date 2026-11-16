@@ -56,10 +56,10 @@ public class AnalisisGastosViewController {
         try {
             Cliente cliente = fachada.getClienteActivo();
             AnalisisGasto analisis = analisisController.analizar(cliente);
-            lblPromedio.setText(Formatos.dinero(analisis.getPromedio()));
-            lblDesviacion.setText(Formatos.dinero(analisis.getDesviacionEstandar()));
-            lblUmbral.setText(Formatos.dinero(analisis.getUmbralAtipico()));
-            listaSospechosas.setAll(analisis.getListaTransaccionesSospechosas());
+            lblPromedio.setText(Formatos.dinero(analisis.promedio()));
+            lblDesviacion.setText(Formatos.dinero(analisis.desviacionEstandar()));
+            lblUmbral.setText(Formatos.dinero(analisis.umbralAtipico()));
+            listaSospechosas.setAll(analisis.transaccionesSospechosas());
             cargarGrafico(analisisController.obtenerGastosPorMonedero(cliente));
         } catch (IllegalArgumentException | IllegalStateException e) {
             Alertas.mostrarError(e.getMessage());

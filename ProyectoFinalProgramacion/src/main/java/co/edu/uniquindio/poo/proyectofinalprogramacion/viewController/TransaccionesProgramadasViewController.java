@@ -4,9 +4,9 @@ import co.edu.uniquindio.poo.proyectofinalprogramacion.controller.MonederoVirtua
 import co.edu.uniquindio.poo.proyectofinalprogramacion.controller.MonederosController;
 import co.edu.uniquindio.poo.proyectofinalprogramacion.controller.ProgramadasController;
 import co.edu.uniquindio.poo.proyectofinalprogramacion.model.Cliente;
+import co.edu.uniquindio.poo.proyectofinalprogramacion.model.Frecuencia;
 import co.edu.uniquindio.poo.proyectofinalprogramacion.model.Monedero;
 import co.edu.uniquindio.poo.proyectofinalprogramacion.model.TransaccionProgramada;
-import co.edu.uniquindio.poo.proyectofinalprogramacion.model.Frecuencia;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,8 +49,9 @@ public class TransaccionesProgramadasViewController {
         cmbTipo.setItems(FXCollections.observableArrayList(programadasController.obtenerTipos()));
         cmbFrecuencia.setItems(FXCollections.observableArrayList(programadasController.obtenerFrecuencias()));
         cmbMonederoOrigen.setItems(FXCollections.observableArrayList(monederosController.obtenerMonederos(cliente)));
+        cmbMonederoOrigen.setConverter(Formatos.texto(monederosController::describir));
         cmbMonederoDestino.setItems(FXCollections.observableArrayList(monederosController.obtenerTodosLosMonederos()));
-        cmbMonederoDestino.setConverter(Formatos.texto(monederosController::describir));
+        cmbMonederoDestino.setConverter(Formatos.texto(monederosController::describirConCliente));
         configurarTabla();
         configurarEventos();
         actualizarTabla();
@@ -109,7 +110,7 @@ public class TransaccionesProgramadasViewController {
             return;
         }
         try {
-            programadasController.actualizarProgramacion(seleccionada.getId(),
+            programadasController.actualizarProgramacion(fachada.getClienteActivo(), seleccionada.getId(),
                     Formatos.decimal(txtMonto.getText(), "monto"), cmbFrecuencia.getValue(),
                     dpProximaEjecucion.getValue(), cmbMonederoOrigen.getValue(), cmbMonederoDestino.getValue());
             actualizarTabla();
@@ -186,9 +187,9 @@ public class TransaccionesProgramadasViewController {
         txtMonto.setText(String.valueOf(programada.getMonto()));
         cmbFrecuencia.setValue(programada.getFrecuencia());
         dpProximaEjecucion.setValue(programada.getFechaEjecucion().toLocalDate());
-        cmbMonederoOrigen.setValue(programada.getMonederoOrigen());
-        cmbMonederoDestino.setValue(programada.getMonederoDestino());
-        mostrarDestino(programada.getMonederoDestino() != null);
+        cmbMonederoOrigen.setValue(programadasController.obtenerMonederoOrigen(programada));
+        cmbMonederoDestino.setValue(programadasController.obtenerMonederoDestino(programada));
+        mostrarDestino(programada.getCuentaDestino() != null);
 
         // El tipo no se modifica
         cmbTipo.setDisable(true);

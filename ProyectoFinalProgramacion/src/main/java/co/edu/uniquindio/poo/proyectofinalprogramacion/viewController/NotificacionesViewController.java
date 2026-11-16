@@ -3,8 +3,6 @@ package co.edu.uniquindio.poo.proyectofinalprogramacion.viewController;
 import co.edu.uniquindio.poo.proyectofinalprogramacion.controller.MonederoVirtualController;
 import co.edu.uniquindio.poo.proyectofinalprogramacion.controller.NotificacionesController;
 import co.edu.uniquindio.poo.proyectofinalprogramacion.model.Notificacion;
-import co.edu.uniquindio.poo.proyectofinalprogramacion.model.enums.Canal;
-import co.edu.uniquindio.poo.proyectofinalprogramacion.model.enums.TipoNotificacion;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,10 +17,9 @@ public class NotificacionesViewController {
     private NotificacionesController notificacionesController;
     private ObservableList<Notificacion> listaNotificaciones;
 
-    @FXML private ComboBox<TipoNotificacion> cmbTipo;
-    @FXML private ComboBox<Canal> cmbCanal;
+    @FXML private ComboBox<String> cmbCanal;
     @FXML private TableView<Notificacion> tblNotificaciones;
-    @FXML private TableColumn<Notificacion, String> colFecha, colTipo, colCanal, colMensaje;
+    @FXML private TableColumn<Notificacion, String> colFecha, colCanal, colMensaje;
 
     public NotificacionesViewController() {
         this.fachada = MonederoVirtualController.getInstancia();
@@ -32,7 +29,6 @@ public class NotificacionesViewController {
 
     @FXML
     private void initialize() {
-        cmbTipo.setItems(FXCollections.observableArrayList(notificacionesController.obtenerTipos()));
         cmbCanal.setItems(FXCollections.observableArrayList(notificacionesController.obtenerCanales()));
         configurarTabla();
         actualizarTabla();
@@ -40,8 +36,7 @@ public class NotificacionesViewController {
 
     private void configurarTabla() {
         colFecha.setCellValueFactory(c -> new SimpleStringProperty(Formatos.fechaHora(c.getValue().getFecha())));
-        colTipo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTipo().toString()));
-        colCanal.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getCanal().toString()));
+        colCanal.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getCanal()));
         colMensaje.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getMensaje()));
         tblNotificaciones.setItems(listaNotificaciones);
     }
@@ -53,7 +48,6 @@ public class NotificacionesViewController {
 
     @FXML
     private void limpiarFiltros() {
-        cmbTipo.setValue(null);
         cmbCanal.setValue(null);
         actualizarTabla();
     }
@@ -69,7 +63,7 @@ public class NotificacionesViewController {
             return;
         }
         try {
-            notificacionesController.eliminarNotificacion(fachada.getClienteActivo(), seleccionada.getCodigo());
+            notificacionesController.eliminarNotificacion(fachada.getClienteActivo(), seleccionada.getId());
             actualizarTabla();
             Alertas.mostrarInformacion("Notificación eliminada correctamente");
         } catch (IllegalArgumentException | IllegalStateException e) {
@@ -79,7 +73,7 @@ public class NotificacionesViewController {
 
     private void actualizarTabla() {
         listaNotificaciones.setAll(notificacionesController.obtenerNotificaciones(
-                fachada.getClienteActivo(), cmbTipo.getValue(), cmbCanal.getValue()));
+                fachada.getClienteActivo(), cmbCanal.getValue()));
         tblNotificaciones.refresh();
     }
 }

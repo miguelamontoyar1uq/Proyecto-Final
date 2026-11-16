@@ -7,10 +7,6 @@
    <Label maxWidth="Infinity" styleClass="titulo" text="Notificaciones" />
    <HBox alignment="BOTTOM_LEFT" spacing="20.0">
       <VBox spacing="4.0" HBox.hgrow="ALWAYS">
-         <Label styleClass="etiqueta" text="Tipo:" />
-         <ComboBox fx:id="cmbTipo" maxWidth="Infinity" promptText="Todos" />
-      </VBox>
-      <VBox spacing="4.0" HBox.hgrow="ALWAYS">
          <Label styleClass="etiqueta" text="Canal:" />
          <ComboBox fx:id="cmbCanal" maxWidth="Infinity" promptText="Todos" />
       </VBox>
@@ -23,7 +19,6 @@
       </columnResizePolicy>
       <columns>
          <TableColumn fx:id="colFecha" text="Fecha" />
-         <TableColumn fx:id="colTipo" text="Tipo" />
          <TableColumn fx:id="colCanal" text="Canal" />
          <TableColumn fx:id="colMensaje" text="Mensaje" />
       </columns>

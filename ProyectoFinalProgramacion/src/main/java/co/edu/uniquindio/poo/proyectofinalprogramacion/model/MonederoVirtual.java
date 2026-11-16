@@ -82,6 +82,20 @@ public class MonederoVirtual {
         }
     }
 
+    public void eliminarCliente(String idCliente) {
+        Cliente cliente = obtenerCliente(idCliente);
+        listaTransaccionesProgramadas.removeIf(p -> cliente.getListaTransaccionesProgramadas().contains(p));
+        listaClientes.remove(idCliente);
+    }
+
+    public void eliminarTransaccionProgramada(String idProgramada) {
+        boolean eliminada = listaTransaccionesProgramadas.removeIf(p -> p.getId().equals(idProgramada));
+        if (!eliminada) {
+            throw new IllegalArgumentException("No existe la transacción programada " + idProgramada);
+        }
+        listaClientes.values().forEach(c -> c.eliminarTransaccionProgramada(idProgramada));
+    }
+
     // ---------- Notificaciones (usan la interfaz CanalNotificacion) ----------
 
     public void registrarCanal(CanalNotificacion canal) {
@@ -147,7 +161,7 @@ public class MonederoVirtual {
     // ---------- Comisiones y beneficios ----------
 
     // Tarifa según el rango del cliente, con descuento extra si canjeó el beneficio
-    private double calcularComisionTransferencia(Cliente cliente, double monto) {
+    public double calcularComisionTransferencia(Cliente cliente, double monto) {
         double tasa = switch (cliente.getRango()) {
             case BRONCE -> 0.10;
             case PLATA -> 0.08;

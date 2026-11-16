@@ -42,6 +42,7 @@ public class ConsultasHistorialViewController {
     private void initialize() {
         Cliente cliente = fachada.getClienteActivo();
         cmbMonedero.setItems(FXCollections.observableArrayList(monederosController.obtenerMonederos(cliente)));
+        cmbMonedero.setConverter(Formatos.texto(monederosController::describir));
         cmbTipo.setItems(FXCollections.observableArrayList(transaccionesController.obtenerTiposOperacion()));
         configurarTabla();
         actualizarSaldo();
@@ -84,7 +85,8 @@ public class ConsultasHistorialViewController {
             Alertas.mostrarAdvertencia("Seleccione una transacción de la tabla");
             return;
         }
-         if (!Alertas.confirmar("¿Revertir la transacción " + seleccionada.getId() + "?")) {            return;
+        if (!Alertas.confirmar("¿Revertir la transacción " + seleccionada.getId() + "?")) {
+            return;
         }
         try {
             transaccionesController.revertirTransaccion(fachada.getClienteActivo(), seleccionada);

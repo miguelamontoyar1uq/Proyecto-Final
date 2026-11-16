@@ -242,6 +242,37 @@ public class Cliente {
         this.listaTransaccionesProgramadas.add(transaccion);
     }
 
+    // ---------- Eliminar y renombrar ----------
+
+    public void eliminarMonedero(String nombreMonedero) {
+        if (listaMonederos.remove(nombreMonedero) == null) {
+            throw new IllegalArgumentException("No existe el monedero " + nombreMonedero);
+        }
+    }
+
+    public void renombrarMonedero(String nombreActual, String nombreNuevo) {
+        validarTextoObligatorio(nombreNuevo, "El nombre del monedero");
+        Monedero monedero = listaMonederos.get(nombreActual);
+        if (monedero == null) {
+            throw new IllegalArgumentException("No existe el monedero " + nombreActual);
+        }
+        if (!nombreActual.equals(nombreNuevo) && listaMonederos.containsKey(nombreNuevo)) {
+            throw new IllegalArgumentException("Ya existe un monedero con el nombre " + nombreNuevo);
+        }
+        listaMonederos.remove(nombreActual);
+        listaMonederos.put(nombreNuevo, monedero);
+    }
+
+    public void eliminarNotificacion(String idNotificacion) {
+        if (!notificaciones.removeIf(n -> n.getId().equals(idNotificacion))) {
+            throw new IllegalArgumentException("No existe la notificación " + idNotificacion);
+        }
+    }
+
+    public boolean eliminarTransaccionProgramada(String idProgramada) {
+        return listaTransaccionesProgramadas.removeIf(t -> t.getId().equals(idProgramada));
+    }
+
     // ---------- Detección de transacciones atípicas ----------
 
     /**

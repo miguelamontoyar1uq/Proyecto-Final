@@ -17,7 +17,7 @@
                <Label fx:id="lblRango" styleClass="tarjeta-valor" text="—" />
             </VBox>
             <VBox maxWidth="Infinity" styleClass="tarjeta" HBox.hgrow="ALWAYS">
-               <Label styleClass="tarjeta-etiqueta" text="Descuento de tarifa" />
+               <Label styleClass="tarjeta-etiqueta" text="Tarifa de transferencia" />
                <Label fx:id="lblDescuento" styleClass="tarjeta-valor" text="0%" />
             </VBox>
          </HBox>
@@ -51,7 +51,7 @@
                      <TableColumn fx:id="colFechaPuntos" text="Fecha" />
                      <TableColumn fx:id="colMovimiento" text="Movimiento" />
                      <TableColumn fx:id="colPuntosMov" text="Puntos" />
-                     <TableColumn fx:id="colTransaccion" text="Transacción asociada" />
+                     <TableColumn fx:id="colTransaccion" text="Motivo" />
                   </columns>
                </TableView>
             </Tab>

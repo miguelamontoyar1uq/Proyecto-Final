@@ -21,7 +21,7 @@ public class GestionMonederosViewController {
     private MonederosController monederosController;
     private ObservableList<Monedero> listaMonederos;
 
-    @FXML private TextField txtNombre, txtSaldoInicial, txtMetaAhorro, txtLimiteDiario, txtUmbralSaldoBajo;
+    @FXML private TextField txtNombre, txtSaldoInicial, txtMetaAhorro, txtLimiteRetiro, txtUmbralSaldoBajo;
     @FXML private Label lblMeta, lblLimite, lblUmbral;
     @FXML private ComboBox<String> cmbTipo;
     @FXML private TableView<Monedero> tblMonederos;
@@ -43,7 +43,8 @@ public class GestionMonederosViewController {
 
     private void configurarTabla() {
         colCodigo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNumeroCuenta()));
-        colNombre.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNombre()));
+        colNombre.setCellValueFactory(c ->
+                new SimpleStringProperty(monederosController.obtenerNombre(c.getValue())));
         colTipo.setCellValueFactory(c ->
                 new SimpleStringProperty(monederosController.obtenerTipo(c.getValue())));
         colSaldo.setCellValueFactory(c -> new SimpleStringProperty(Formatos.dinero(c.getValue().getSaldo())));
@@ -73,7 +74,7 @@ public class GestionMonederosViewController {
             double saldo = Formatos.decimal(txtSaldoInicial.getText(), "saldo inicial");
             monederosController.agregarMonedero(fachada.getClienteActivo(), cmbTipo.getValue(),
                     txtNombre.getText(), saldo, leerCampoTipo(txtMetaAhorro, "meta de ahorro"),
-                    leerCampoTipo(txtLimiteDiario, "límite diario"),
+                    leerCampoTipo(txtLimiteRetiro, "límite de retiro"),
                     leerCampoTipo(txtUmbralSaldoBajo, "umbral de saldo bajo"));
             actualizarTabla();
             limpiarFormulario();
@@ -93,7 +94,6 @@ public class GestionMonederosViewController {
         try {
             monederosController.actualizarMonedero(fachada.getClienteActivo(), seleccionado.getNumeroCuenta(),
                     txtNombre.getText(), leerCampoTipo(txtMetaAhorro, "meta de ahorro"),
-                    leerCampoTipo(txtLimiteDiario, "límite diario"),
                     leerCampoTipo(txtUmbralSaldoBajo, "umbral de saldo bajo"));
             actualizarTabla();
             limpiarFormulario();
@@ -110,7 +110,7 @@ public class GestionMonederosViewController {
             Alertas.mostrarAdvertencia("Seleccione un monedero de la tabla");
             return;
         }
-        if (!Alertas.confirmar("¿Eliminar el monedero " + seleccionado.getNombre() + "?")) {
+        if (!Alertas.confirmar("¿Eliminar el monedero " + monederosController.describir(seleccionado) + "?")) {
             return;
         }
         try {
@@ -129,33 +129,36 @@ public class GestionMonederosViewController {
         txtNombre.clear();
         txtSaldoInicial.clear();
         txtMetaAhorro.clear();
-        txtLimiteDiario.clear();
+        txtLimiteRetiro.clear();
         txtUmbralSaldoBajo.clear();
         cmbTipo.setValue(null);
         cmbTipo.setDisable(false);
         txtSaldoInicial.setDisable(false);
+        txtLimiteRetiro.setDisable(false);
         mostrarCamposSegunTipo(null);
     }
 
     private void mostrarMonedero(Monedero monedero) {
         cmbTipo.setValue(monederosController.obtenerTipo(monedero));
-        txtNombre.setText(monedero.getNombre());
+        txtNombre.setText(monederosController.obtenerNombre(monedero));
         txtSaldoInicial.setText(String.valueOf(monedero.getSaldo()));
         txtMetaAhorro.setText(String.valueOf(monederosController.obtenerMeta(monedero)));
-        txtLimiteDiario.setText(String.valueOf(monederosController.obtenerLimite(monedero)));
+        txtLimiteRetiro.setText(String.valueOf(monederosController.obtenerLimite(monedero)));
         txtUmbralSaldoBajo.setText(String.valueOf(monederosController.obtenerUmbral(monedero)));
         mostrarCamposSegunTipo(cmbTipo.getValue());
 
-        // Tipo y saldo no se modifican
+        // Tipo, saldo y límite no se modifican
         cmbTipo.setDisable(true);
         txtSaldoInicial.setDisable(true);
+        txtLimiteRetiro.setDisable(true);
     }
 
     private void mostrarCamposSegunTipo(String tipo) {
         boolean ahorros = MonederosController.AHORROS.equals(tipo);
-        boolean gastos = MonederosController.GASTOS_DIARIOS.equals(tipo);
+        boolean gastos = MonederosController.GASTOS.equals(tipo);
         cambiarVisibilidad(ahorros, lblMeta, txtMetaAhorro);
-        cambiarVisibilidad(gastos, lblLimite, txtLimiteDiario, lblUmbral, txtUmbralSaldoBajo);
+        cambiarVisibilidad(ahorros || gastos, lblLimite, txtLimiteRetiro);
+        cambiarVisibilidad(gastos, lblUmbral, txtUmbralSaldoBajo);
     }
 
     private void cambiarVisibilidad(boolean visible, Node... nodos) {

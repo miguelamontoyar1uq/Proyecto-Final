@@ -15,7 +15,7 @@ public abstract class Monedero {
     private double saldo;
     private boolean activo;
     private final List<Transaccion> historialTransacciones;
-    private static final double TASA_CARGO_RETIRO = 0.01;
+    public static final double TASA_CARGO_RETIRO = 0.01;
 
     public Monedero(String numeroCuenta, double saldoInicial) {
         if (numeroCuenta == null || numeroCuenta.isBlank()) {

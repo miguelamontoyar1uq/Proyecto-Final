@@ -18,8 +18,8 @@
       <TextField fx:id="txtSaldoInicial" promptText="0.00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Label fx:id="lblMeta" managed="false" styleClass="etiqueta" text="Meta de ahorro:" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="3" />
       <TextField fx:id="txtMetaAhorro" managed="false" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Label fx:id="lblLimite" managed="false" styleClass="etiqueta" text="Límite diario:" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-      <TextField fx:id="txtLimiteDiario" managed="false" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label fx:id="lblLimite" managed="false" styleClass="etiqueta" text="Límite de retiro:" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+      <TextField fx:id="txtLimiteRetiro" managed="false" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <Label fx:id="lblUmbral" managed="false" styleClass="etiqueta" text="Umbral de saldo bajo:" visible="false" GridPane.columnIndex="0" GridPane.rowIndex="5" />
       <TextField fx:id="txtUmbralSaldoBajo" managed="false" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
    </GridPane>
