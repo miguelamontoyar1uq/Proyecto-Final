@@ -2,8 +2,12 @@ module co.edu.uniquindio.poo.proyectofinalprogramacion {
     requires javafx.controls;
     requires javafx.fxml;
 
+    // Agrega el permiso para que tu código pueda usar las aserciones y anotaciones de JUnit
+    requires org.junit.jupiter.api;
+
     opens co.edu.uniquindio.poo.proyectofinalprogramacion to javafx.fxml;
     exports co.edu.uniquindio.poo.proyectofinalprogramacion;
     opens co.edu.uniquindio.poo.proyectofinalprogramacion.viewController to javafx.fxml;
-    opens co.edu.uniquindio.poo.proyectofinalprogramacion.model to javafx.base, javafx.fxml;
+
+    opens co.edu.uniquindio.poo.proyectofinalprogramacion.model to javafx.base, javafx.fxml, org.junit.platform.commons;
 }
