@@ -61,7 +61,7 @@ public class App extends Application {
     /** Pone la vista en la ventana (la primera vez crea la escena, después solo cambia la raíz). */
     private void cambiarVista(Parent raiz) {
         if (stage.getScene() == null) {
-            stage.setScene(new Scene(raiz, 1200, 700));
+            stage.setScene(new Scene(raiz, 1300, 750));
         } else {
             stage.getScene().setRoot(raiz);
         }

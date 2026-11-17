@@ -7,9 +7,12 @@ import co.edu.uniquindio.poo.proyectofinalprogramacion.model.Cliente;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -118,13 +121,27 @@ public class PrincipalViewController {
         }
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource("view/" + archivo));
-            areaContenido.setCenter(loader.load());
+            Parent vista = loader.load();
+            areaContenido.setCenter(envolverConScroll(vista));
             vistaActual = archivo;
             botonActual = boton;
             marcarOpcion(boton);
         } catch (IOException e) {
             Alertas.mostrarError("No se pudo abrir la vista: " + e.getMessage());
         }
+    }
+
+    // Permite desplazar vistas largas
+    private Node envolverConScroll(Parent vista) {
+        if (vista instanceof ScrollPane) {
+            return vista;
+        }
+        ScrollPane scroll = new ScrollPane(vista);
+        scroll.setFitToWidth(true);
+        scroll.setFitToHeight(true);
+        scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scroll.getStyleClass().add("scroll-vista");
+        return scroll;
     }
 
     private void marcarOpcion(Button boton) {

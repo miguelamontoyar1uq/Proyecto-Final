@@ -26,7 +26,7 @@
    </HBox>
    <VBox maxWidth="360.0" styleClass="tarjeta">
       <Label styleClass="tarjeta-etiqueta" text="Saldo del monedero" />
-      <Label fx:id="lblSaldo" styleClass="tarjeta-valor" text="$ 0.00" />
+      <Label fx:id="lblSaldo" styleClass="tarjeta-valor" text="\$ 0.00" />
    </VBox>
    <Label fx:id="lblMensaje" prefHeight="20.0" styleClass="mensaje-error" wrapText="true" />
    <TableView fx:id="tblHistorial" minHeight="150.0" VBox.vgrow="ALWAYS">
